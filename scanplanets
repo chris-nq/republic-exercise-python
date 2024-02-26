@@ -1,0 +1,7 @@
+#!.venv/bin/python
+
+from src.scan_planets import scan_planets
+
+
+if __name__ == "__main__":
+    scan_planets()

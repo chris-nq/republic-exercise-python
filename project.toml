@@ -1,0 +1,6 @@
+# FILEPATH: /home/chris/Documents/projects/republic-exam/project.toml
+
+[package]
+name = "republic-exam"
+version = "0.1.0"
+edition = "2024"
