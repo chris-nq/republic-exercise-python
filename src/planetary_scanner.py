@@ -24,22 +24,22 @@ class PlanetaryScanner:
         with open(self.filename, "w", newline="") as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=self.headers, delimiter="|")
             writer.writeheader()
-            writer = csv.DictWriter(csvfile, fieldnames=self.headers, delimiter="|", quoting=csv.QUOTE_NONNUMERIC)
+            writer = csv.DictWriter(csvfile, fieldnames=self.headers, delimiter="|", quoting=csv.QUOTE_ALL)
+            count = 0
             with self.progressbar(archive) as bar:
-                for page in bar:
-                    for planet in page:
-                        if terrains and not any(t in planet.terrain for t in terrains):
-                            continue
-                        planet_dict = dict(planet)
-                        planet_dict["terrain"] = ", ".join(planet_dict["terrain"])
-                        writer.writerow(planet_dict)
-                        if throttle:
-                            time.sleep(throttle)
+                for planet in bar:
+                    count += 1
+                    if throttle:
+                        time.sleep(throttle)
+                    if terrains and not any(t in planet.terrain for t in terrains):
+                        continue
+                    planet_dict = dict(planet)
+                    planet_dict["terrain"] = ", ".join(planet_dict["terrain"])
+                    writer.writerow(planet_dict)
+            click.echo(f"Scanned {count} planets")
 
-    @contextmanager
     def progressbar(self, iterable: Iterable, label: str = None, length: int = None):
-        with click.progressbar(iterable, label=label or "Scanning planets", length=length) as bar:
-            yield bar
+        return click.progressbar(iterable, label=label or "Scanning planets", length=length)
 
 
     

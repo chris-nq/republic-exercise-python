@@ -28,14 +28,27 @@ class PlanetaryArchive:
         if self._pages is not None:
             return self._pages
         
-        for _, _, filenames in os.walk(self.dir_path):
-            self._pages = len(filenames)
+        self._pages = self.get_length()
 
         return self._pages
     
     def __iter__(self):
         self.errors = Errors()
         self._pages = None
+        yield from self.yield_planets()
+
+    def get_length(self):
+        # return len(os.walk(self.dir_path)[2])
+        for root, _, filenames in os.walk(self.dir_path):
+            with open(os.path.join(root, filenames[0]), "r") as file:
+                raw_file = file.read()
+
+            json_file = json.loads(raw_file)
+            count = json_file.get("count")
+            return count
+            
+
+    def yield_planets(self):
         for root, _, filenames in os.walk(self.dir_path):
             for filename in sorted(filenames):
                 with open(os.path.join(root, filename), "r") as file:
@@ -46,7 +59,7 @@ class PlanetaryArchive:
                     if results is None:
                         self.errors.no_results.append(filename)
                         continue
-                    yield (Planet.from_dict(planet) for planet in results)
+                    yield from (Planet.from_dict(planet) for planet in results)
                 except json.JSONDecodeError:
                     self.errors.json_error.append(filename)
                     continue
