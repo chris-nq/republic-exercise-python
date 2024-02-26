@@ -6,3 +6,7 @@
 #
 click==8.1.7
     # via -r requirements.in
+prettytable==3.10.0
+    # via -r requirements.in
+wcwidth==0.2.13
+    # via prettytable
