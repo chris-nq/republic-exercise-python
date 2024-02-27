@@ -66,3 +66,24 @@ def test_scan_planets_contains_quotes():
     assert all(
         cell.startswith('"') and cell.endswith('"') for row in data[1:] for cell in row
     )
+
+
+def test_scan_planets_is_accurate():
+    result = invoke_scan_planets(["mountains"])
+    assert result.exit_code == 0
+    data = get_csv_data("tests/planets_mountains.csv")
+    expected_names = [
+        "Alderaan",
+        "Endor",
+        "Naboo",
+        "Coruscant",
+        "Mustafar",
+        "Mygeeto",
+        "Cato Neimoidia",
+        "Saleucami",
+        "Dantooine",
+        "Trandosha",
+        "Socorro",
+    ]
+    for i, name in enumerate(expected_names):
+        assert data[i + 1][0] == f'"{name}"'
