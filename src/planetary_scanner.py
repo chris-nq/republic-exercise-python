@@ -13,7 +13,7 @@ class PlanetaryScanner:
     Scans a PlanetaryArchive and writes a CSV file
     """
 
-    def __init__(self, headers=None, output_dir=None):
+    def __init__(self, output_dir=None, headers=None):
         self.terrains = None
         self.output_dir = output_dir or "."
         self.headers = headers or ["name", "terrain", "population"]
