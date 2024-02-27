@@ -87,3 +87,10 @@ def test_scan_planets_is_accurate():
     ]
     for i, name in enumerate(expected_names):
         assert data[i + 1][0] == f'"{name}"'
+
+
+def test_planetary_scanner_replaces_bad_chars():
+    result = invoke_scan_planets(["jungle"])
+    assert result.exit_code == 0
+    data = get_csv_data("tests/planets_jungle.csv")
+    assert data[1][0] == '"Yavi_n_ IV"'

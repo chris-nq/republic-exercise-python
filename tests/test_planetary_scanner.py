@@ -11,3 +11,4 @@ def test_planetary_scanner_scan(mocker, mock_csv_writer):
     spy = mocker.spy(csv.DictWriter, "writerow")
     scanner.scan([], archive, throttle=0)
     assert spy.call_count == 30
+    

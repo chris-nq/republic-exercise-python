@@ -4,6 +4,7 @@
 Using the provided data files containing data in json format, create a simple CSV file generator to support the following functionality: 
 
 > A user should be able to run the file generator via the command line. The file generator should accept an argument with a terrain value. The file generator should read in the planet data from the provided data files, and output a CSV file containing only data for planets that have the terrain value specified in the input. If no terrain value is provided, output a CSV file with data for all planets. You can use any language you'd like (python, .net core, node js, ruby, etc).
+
 ## Setup
 
 To setup and activate the virtual environment, run:
